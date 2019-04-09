@@ -5,17 +5,22 @@ class TodoItem extends Component{
      this.handleClick = this.handleClick.bind(this);//在这里绑定this 有利于性能优化
     }
     render(){
+        /**存一个属性变量值 {}花括号的的结构赋值*/
+        const { count } = this.props
         return (
             <div  
-            key={this.props.index}
+        
             onClick={this.handleClick}
             >
-                 {this.props.count}
+                 {count}
             </div>
             )
     }
     handleClick(){
-     this.props.deleteItem(this.props.index)
+        /**利用结构赋值改写 */
+        const {deleteItem,index } = this.props
+        deleteItem(index);
+       //  this.props.deleteItem(this.props.index)
     }
 }
 
