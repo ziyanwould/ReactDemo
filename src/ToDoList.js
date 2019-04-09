@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import TodoItem from './TodoItem'
 import './style.css'
 class App extends Component {
   constructor(props){
@@ -28,13 +28,29 @@ class App extends Component {
            {
              this.state.list.map((item,index)=>{
                return (
-                 <li 
-                 key={index}
-                 onClick={this.handleItemDelete.bind(this,index)}
-                 dangerouslySetInnerHTML={{__html:item}}//不设置转译 能输出像<h1>
-                 >
-                {/* {item}*/}
-                </li>)
+                 <React.Fragment>
+                  {/**
+                    <li 
+                    key={index}
+                    onClick={this.handleItemDelete.bind(this,index)}
+                     dangerouslySetInnerHTML={{__html:item}}//不设置转译 能输出像<h1>
+                    >
+            
+                  */} 
+
+                 <TodoItem
+              
+                  count={item}
+                  index={index}
+
+                  /**强制绑定父组件的this 不然子组件找不到父组件的方法 */
+
+                  deleteItem={this.handleItemDelete.bind(this)}
+                  />
+                 </React.Fragment>
+               
+                 
+                 )
              })
            }
          </ul>
