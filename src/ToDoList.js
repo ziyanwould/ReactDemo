@@ -16,6 +16,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('parent render')
     return (
       <React.Fragment>
          <div>
@@ -31,7 +32,7 @@ class App extends Component {
           />
           <button onClick={this.handleBtnClick}>提交</button>
          </div>
-         <ul>
+         <ul ref={(ul)=>{this.ul=ul}}>
          {this.getTodoItem()}
          </ul>
         
@@ -39,6 +40,36 @@ class App extends Component {
       
     );
   }
+
+  //在组件即将被挂载到页面时候自动执行 只执行一次 生命周期函数
+  componentWillMount(){
+    console.log('componentWillMount')
+  }
+
+  //在组件即将被挂载到页面后 自动执行 只执行一次 生命周期函数
+  componentDidMount(){
+    console.log('componentDidMount')
+  }
+
+  //组件被更新之前，他会自动被执行 生命周期函数
+  shouldComponentUpdate(){
+    console.log('shouldComponentUpdate')
+    return true //true 组件需要更新 false 组件将不会更新 后面流程不会被执行
+  }
+  
+  //组件更新之前，它会自动执行，但是他在shouldComponentUpdate之后执行
+  //如果shouldComponentUpdate 返回true他才执行
+  //如果返回false，这个函数就不会被执行
+  componentWillUpdate(){
+    console.log('componentWillUpdate')
+  }
+  
+  //组件更新完后执行 也就是render函数后执行
+  componentDidUpdate(){
+    console.log('componentDidUpdate')
+  }
+  
+
   getTodoItem(){
     /**代码比较多时候 要进行函数的拆分 不要杂糅一起 */
     return this.state.list.map((item,index)=>{
@@ -88,7 +119,11 @@ class App extends Component {
       list:[...prevState.list,prevState.inputValue],
       inputValue:''
     }
-   ))
+   ),()=>{
+     /**由于setstate 是一个异步函数 应该执行完后再进行DOM节点操作 */
+    console.log(this.ul.querySelectorAll('div').length)
+   })
+   
   }
   handleItemDelete(index){
  
@@ -98,6 +133,7 @@ class App extends Component {
     list.splice(index,1);
     return {list}
   })
+ 
   }
 }
 
