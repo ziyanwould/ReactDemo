@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TodoItem from './TodoItem'
-import Test from './Test'
 import './style.css'
 class App extends Component {
   constructor(props){
@@ -27,15 +26,15 @@ class App extends Component {
             className='input'
             value={this.state.inputValue} 
             onChange={this.changeinput}
+            //不推荐用ref dom
+           // ref = {(input)=>{this.input = input}}
           />
           <button onClick={this.handleBtnClick}>提交</button>
          </div>
          <ul>
          {this.getTodoItem()}
          </ul>
-         <Test
-         content={this.state.inputValue}
-         />
+        
       </React.Fragment>
       
     );
@@ -47,7 +46,7 @@ class App extends Component {
       
          
         <TodoItem
-         key={index}
+         key={item}
          count={item}
          index={index}
          /**强制绑定父组件的this 不然子组件找不到父组件的方法 */
@@ -73,7 +72,9 @@ class App extends Component {
 
     //新的应该return一个箭头函数
     // 此时是传递的是一个异步的函数 所以需要value存下数据
+    //const value = this.input.value; //不推荐使用 因为会直接操作DOM
     const value = e.target.value
+    
     this.setState(()=>({
     
         inputValue:value

@@ -8,6 +8,7 @@ class TodoItem extends Component{
     render(){
         /**存一个属性变量值 {}花括号的的结构赋值*/
         const { count,text } = this.props
+        /**JSX --> createElemnt --> 虚拟DOM (JS对象 )--> 真实的DOM*/
         return (
             <div  
         
@@ -27,7 +28,7 @@ class TodoItem extends Component{
 //propTypes 对父组件传过来的数据类型加以核验 类型校验
 TodoItem.propTypes ={
     text:PropTyprs.string.isRequired,//必须要传数值 且不能为空
-    cont:PropTyprs.arrayOf(PropTyprs.string,PropTyprs.number),//可以是字符串或数字
+    cont:PropTyprs.oneOfType([PropTyprs.string,PropTyprs.number]),//可以是字符串或数字
     deleteItem:PropTyprs.func,
     index:PropTyprs.number
 
