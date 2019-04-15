@@ -1,112 +1,46 @@
 import React, { Component } from 'react';
-import TodoItem from './TodoItem'
-import './style.css'
-import axios from 'axios'
-class App extends Component {
-  constructor(props){
-    super(props);
-    //当组件的state或者props发生改变的时候，render函数就会重新执行
-    this.state ={
-      inputValue :'',
-      list:[]
+import { Input,Button, List} from 'antd';
+
+import 'antd/dist/antd.css';
+import store from  './store'
+
+class ToDoList extends Component {
+    constructor(props){
+        super(props);
+      
+        this.state =store.getState()
+        console.log(this.state)
+        // this.state ={
+        //     list:[]
+        // }
+      
     }
-    /**组件初始化 重新指定this this重定向 建议放头部 */
-    this.changeinput = this.changeinput.bind(this)
-    this.handleBtnClick = this.handleBtnClick.bind(this)
-    this.handleItemDelete = this.handleItemDelete.bind(this)
-  }
-
-  render() {
-   
-    return (
-      <React.Fragment>
-         <div>
-         <label htmlFor='insertArea'>输入内容</label>{/**扩大点击区域 */}
-          <input 
-         
-            id='insertArea'
-            className='input'
-            value={this.state.inputValue} 
-            onChange={this.changeinput}
-            //不推荐用ref dom
-           // ref = {(input)=>{this.input = input}}
-          />
-          <button onClick={this.handleBtnClick}>提交</button>
-         </div>
-         <ul>
-         {this.getTodoItem()}
-         </ul>
+    render(){
+       return (
         
-      </React.Fragment>
-      
-    );
-  }
+        <React.Fragment>
+        {/* <div>hellow world</div> */}
+        <div style={{margin:'10px'}}>
+            <Input placeholder="Basic usage" value={this.state.inputValue} style={{width:'300px',marginRight:'10px'}} />
+            <Button type="primary">提交</Button>  
 
-  componentDidMount(){
-    //可以在这里ajax 请求 这里比较好
-    axios.get('/api/todolist')
-    .then(()=>{alert('succ')})
-    .catch(()=>{alert('err')})
-  }
-
-  getTodoItem(){
-    /**代码比较多时候 要进行函数的拆分 不要杂糅一起 */
-    return this.state.list.map((item,index)=>{
-      return (
-      
-         
-        <TodoItem
-         key={index}
-         count={item}
-         index={index}
-         /**强制绑定父组件的this 不然子组件找不到父组件的方法 */
-         deleteItem={this.handleItemDelete}
-         />
+            <List style={{marginTop:'10px',width:'300px'}}
+           
+        
+            bordered
+            dataSource={this.state.list}
+            renderItem={item => (<List.Item>{item}</List.Item>)}
+            />
+        </div>
        
+
+        </React.Fragment>
+       
+
+       )
       
-        
-        )
-    })
-  }
-  changeinput(e){
-
-
-    //旧版的更改数据的方法
-    // this.setState({
-    //   inputValue:e.target.value
-    // })
-
-    //新的应该return一个箭头函数
-    // 此时是传递的是一个异步的函数 所以需要value存下数据
-    //const value = this.input.value; //不推荐使用 因为会直接操作DOM
-    const value = e.target.value
-    
-    this.setState(()=>({
-    
-        inputValue:value
-     
-    }))
-  }
-  handleBtnClick(e){
-    //prevState 是更改数据前的数据 可以直接调用 避免不小心改到state的状态
-   this.setState((prevState)=>(
-    {
-      list:[...prevState.list,prevState.inputValue],
-      inputValue:''
     }
-   ))
-   
-  }
-  handleItemDelete(index){
- 
-
-  this.setState((prevState)=>{
-    const list = [...prevState.list];
-    list.splice(index,1);
-    return {list}
-  })
- 
-  }
+  
 }
 
-export default App;
+export default ToDoList;
