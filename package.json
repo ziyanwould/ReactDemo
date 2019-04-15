@@ -26,6 +26,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6"
   }
 }
