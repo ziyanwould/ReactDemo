@@ -67,4 +67,9 @@ defaultProps 给子组件数据设置默认值 防止父组件不传出现报错
 ###  工作原理
 ![虚拟DOM](./img/QQ截图20190415095215.png)
 
-*  建立store 
+*  建立store  
+*  redux 是传递数据一个框架
+*  Components相当于借书者
+*  Action 相当于你说借什么书
+*  Store 相当于图书管理员
+*  Reducers 相当于书籍登录册

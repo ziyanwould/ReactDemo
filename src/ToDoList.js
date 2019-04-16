@@ -8,11 +8,11 @@ class ToDoList extends Component {
     constructor(props){
         super(props);
       
-        this.state =store.getState()
-        console.log(this.state)
-        // this.state ={
-        //     list:[]
-        // }
+       this.state =store.getState()
+       this.handleInputChange = this.handleInputChange.bind(this)
+       this.handleStoreChanger = this.handleStoreChanger.bind(this)
+       this.handleBtnClick = this.handleBtnClick.bind(this)
+       store.subscribe(this.handleStoreChanger);
       
     }
     render(){
@@ -21,8 +21,13 @@ class ToDoList extends Component {
         <React.Fragment>
         {/* <div>hellow world</div> */}
         <div style={{margin:'10px'}}>
-            <Input placeholder="Basic usage" value={this.state.inputValue} style={{width:'300px',marginRight:'10px'}} />
-            <Button type="primary">提交</Button>  
+            <Input 
+              placeholder="Basic usage"
+              value={this.state.inputValue}
+              style={{width:'300px',marginRight:'10px'}} 
+              onChange={this.handleInputChange}
+              />
+            <Button onClick={this.handleBtnClick} type="primary">提交</Button>  
 
             <List style={{marginTop:'10px',width:'300px'}}
            
@@ -39,6 +44,29 @@ class ToDoList extends Component {
 
        )
       
+    }
+    
+    handleInputChange(e){
+        //创建 action 生成命令
+        const action ={
+            type:'change_input_value',
+            value:e.target.value
+        }
+       //发生给管理员 
+       store.dispatch(action);
+    }
+    handleStoreChanger(){
+        //store 感知变化
+        //console.log('change')
+
+        this.setState(store.getState())//重新渲染
+    }
+    handleBtnClick(){
+        const action ={
+            type:'add_todo_item'
+        }
+
+        store.dispatch(action)
     }
   
 }
