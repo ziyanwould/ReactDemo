@@ -73,3 +73,10 @@ defaultProps 给子组件数据设置默认值 防止父组件不传出现报错
 *  Action 相当于你说借什么书
 *  Store 相当于图书管理员
 *  Reducers 相当于书籍登录册
+*  actionType的拆分有利于项目管理 不会出现莫名的错误
+*  使用actionCreators 来创建action 有利于业务逻辑的的
+
+
+*   store 是唯一
+*   只有store 能够改变自己的内容
+*   reducer 是纯函数(纯函数指的是，给定固定的输入，就会有固定的输出，而去不会有副作用)
