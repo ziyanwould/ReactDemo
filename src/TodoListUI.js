@@ -23,7 +23,10 @@ const TodoListUI =  (props) =>{
             
                 bordered
                 dataSource={props.list}
-                renderItem={(items,index) => (<List.Item onClick={(item) =>{props.handleItemDelete( props.list.findIndex(item=> item=== items))}}>{items}</List.Item>)}
+                renderItem={
+                  // (items,index) => (<List.Item onClick={(item) =>{props.handleItemDelete( props.list.findIndex(item=> item=== items))}}>{items}</List.Item>)
+                  (items,index) => (<List.Item onClick={() =>{props.handleItemDelete(index)}}>{items}</List.Item>)
+                }
                 />
             </div>
            

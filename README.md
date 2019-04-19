@@ -86,3 +86,13 @@ defaultProps 给子组件数据设置默认值 防止父组件不传出现报错
 *  UI组件做渲染
 *  容器组件负责里面的逻辑 关注业务逻辑
 *  无状态组件 (只有render函数的 可以用无状态组件替换掉普通组件) 性能更高 本质就是个函数 普通组件还包换生命周期
+
+
+
+
+#  Redux中间件  
+![虚拟DOM](./img/QQ截图20190419134238.png)
+*   Redux中间件指的是 Action 与 store 中间的意思
+*   redux-thunk 中间件可以让action传个函数 store.dispatch 如果传入是函数 它先回执行函数再将函数的结果返回回去
+*   redux-thunk 中间件对Dispatch方法的升级  Dispatch传入对象就直接传入store 传入函数则先让它执行
+*   redux-saga  中间件（异步代码的编写拆分） 
