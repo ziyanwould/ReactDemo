@@ -5,7 +5,7 @@ import {
     getInputChangeAction,
     getAddItemAction,
     getDeleItemAction,
-    getTodoList
+    getInitList
 } from './store/actionCreators'
 import store from  './store'
 import 'antd/dist/antd.css';
@@ -37,9 +37,9 @@ class ToDoList extends Component {
       
     }
     componentDidMount(){
-        const action = getTodoList();
-         //发生给管理员 
-       store.dispatch(action);
+        const action = getInitList()
+        store.dispatch(action)
+ 
     }
     handleInputChange(e){
         //创建 action 生成命令
