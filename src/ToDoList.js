@@ -1,70 +1,62 @@
-import React, { Component } from 'react';
-import TodoListUI from './TodoListUI'
+import React,{ Component } from 'react'
+//import store from './store'
+import {connect} from 'react-redux'
+class TodoList extends  Component {
 
-import {getInputChangeAction,getAddItemAction,getDeleItemAction} from './store/actionCreators'
-import store from  './store'
-import 'antd/dist/antd.css';
-class ToDoList extends Component {
-    constructor(props){
-        super(props);
-      
-       this.state =store.getState()
-       this.handleInputChange = this.handleInputChange.bind(this)
-       this.handleStoreChanger = this.handleStoreChanger.bind(this)
-       this.handleBtnClick = this.handleBtnClick.bind(this)
-       this.handleItemDelete= this.handleItemDelete.bind(this)
-       store.subscribe(this.handleStoreChanger);
-      
-    }
+
     render(){
-       return (
-        
-        <TodoListUI
-        inputValue={this.state.inputValue}
-        list = {this.state.list}
-        handleInputChange={this.handleInputChange}
-        handleBtnClick={this.handleBtnClick}
-        handleItemDelete={this.handleItemDelete}
-        />
-       
+        return(
+            <div>
+                <div>
+                    <input value={this.props.inputValue/**props 访问公共组件 */}
+                     onChange={this.props.changeInputValue}
+                    />
+                    <button
+                     onClick={this.props.handleClick}
+                    >提交</button>
+                </div>
+                <ul>
+                    {
+                        this.props.list.map((item,index)=>{
+                            return <li key={index}>{item}</li>
+                        })
+                    }
+                </ul>
+            </div>
+        )
+    }
 
-       )
-      
-    }
-    
-    handleInputChange(e){
-        //创建 action 生成命令
-        // const action ={
-        //     type:CHANG_INPUT_VALUE,
-        //     value:e.target.value
-        // }
-        const action = getInputChangeAction(e.target.value)// 有利于组件管理 业务逻辑的拆分 集中在一个文件上便于自动化的测试 
-       //发生给管理员 
-       store.dispatch(action);
-    }
-    handleStoreChanger(){
-        //store 感知变化
-        //console.log('change')
+    //不需要写在这里了
+    // handleInputChange(e){  
+    //     //console.log(e.target.value)
 
-        this.setState(store.getState())//重新渲染
+    // }
+}
+const mapStateToProps = (state) => {//映射到props去
+    return{
+        inputValue:state.inputValue,
+        list:state.list
     }
-    handleBtnClick(){
-        // const action ={
-        //     type:ADD_TODO_ITEM
-        // }
-        const action = getAddItemAction()
-        store.dispatch(action)
-    }
-    handleItemDelete(index){
-      //console.log(index)
-    //   const action ={
-    //     type:DELETE_TODO_ITEM,
-    //     index
-    //    }
-       const action = getDeleItemAction(index)
-       store.dispatch(action)
-    }
-  
 }
 
-export default ToDoList;
+const mapDispatchToProps = (dispatch) =>{//store.dispatch,props
+    return{
+        changeInputValue(e){
+            const action ={
+                type:'change_input_value',
+                value:e.target.value
+            }
+            console.log(e.target.value)
+            dispatch(action)
+        },
+        handleClick(){
+            const action ={
+                type:'add_item'
+              
+            }
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TodoList);//让TodoList与store用于做连接
